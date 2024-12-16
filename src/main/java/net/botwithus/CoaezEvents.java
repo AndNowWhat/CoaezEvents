@@ -379,6 +379,13 @@ public class CoaezEvents extends LoopingScript {
     }
 
     private void handleBoxRedemption(Player player) {
+
+        if (getFreeSlots() < 3) {
+            handleXPItems();
+            handleBanking();
+            return;
+        }
+
         PresentInventoryState state = checkPresentInventoryState();
 
         if (state.totalPresentCount == 0) {
@@ -389,6 +396,7 @@ public class CoaezEvents extends LoopingScript {
             return;
         }
 
+        if (getFreeSlots() >= 3) {
         if (state.whitePresentsCount > 0) {
             println("Opening White Christmas Present...");
             Backpack.interact(WHITE_PRESENT, "Open");
@@ -418,6 +426,10 @@ public class CoaezEvents extends LoopingScript {
             Backpack.interact(GOLD_PRESENT, "Open");
             return;
         }
+    } else {
+        handleXPItems();
+        handleBanking();
+    }
 
     }
 
